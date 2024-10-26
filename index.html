@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singularity Lab</title>
+    <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* 深灰色背景 */
+            color: #e0e0e0; /* 浅灰色文字 */
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: #1f1f1f; /* 深灰色 */
+            padding: 20px 60px 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+            border-bottom: 1px solid #333; /* 底部边框 */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+        }
+        .logo img {
+            width: auto;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff5722; /* 悬停时橙色 */
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            list-style: none;
+            padding: 10px;
+            border-radius: 8px; /* 圆角 */
+        }
+        .dropdown-menu li {
+            padding: 5px 10px;
+        }
+        .dropdown-menu li:hover {
+            background-color: #444;
+        }
+        .dropdown-menu li a {
+            color: #fff;
+        }
+
+        .hero {
+            height: 100vh;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #e0e0e0;
+            background-blend-mode: multiply;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 24px;
+        }
+
+        section {
+            width: 100%;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+        .content-block {
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        /* 团队产品 */
+        #products .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .product-card {
+            background: rgba(31, 31, 31, 0.9); /* 半透明背景 */
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            transition: transform 0.3s, box-shadow 0.3s; /* 卡片悬停效果 */
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2); /* 青色阴影效果 */
+        }
+        .product-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: -10px; /* 调整为较小的间距 */
+        }
+        .product-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff5722; /* 橙色标题 */
+        }
+        .product-card p {
+            font-size: 16px;
+        }
+
+        /* 团队成员 */
+        #team .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .team-member {
+            background: rgba(31, 31, 31, 0.9); /* 半透明背景 */
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(255, 87, 34, 0.2); /* 橙色阴影效果 */
+        }
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .team-member h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #ff5722;
+        }
+        .team-member p {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #333;
+        }
+        .social-links a {
+            margin: 0 15px;
+            font-size: 1.5rem;
+            color: #00aced;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #fff;
+        }
+
+        /* 手机端自适应 */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <script>
+        // 切换语言的功能
+        function toggleLanguage(lang, event) {
+            if (event) {
+                event.preventDefault(); // 阻止页面跳转
+            }
+            
+            const elementsZh = document.querySelectorAll('[data-lang="zh"]');
+            const elementsEn = document.querySelectorAll('[data-lang="en"]');
+            const languageToggle = document.querySelector('.language-toggle');
+
+            if (lang === 'zh') {
+                elementsZh.forEach(el => el.style.display = 'block');
+                elementsEn.forEach(el => el.style.display = 'none');
+                languageToggle.textContent = '▾ 语言选择';
+                document.getElementById('roadmap-image').src = 'assets/roadmap_zh.png';
+            } else {
+                elementsZh.forEach(el => el.style.display = 'none');
+                elementsEn.forEach(el => el.style.display = 'block');
+                languageToggle.textContent = '▾ Language';
+                document.getElementById('roadmap-image').src = 'assets/roadmap_en.png';
+            }
+        }
+
+        function toggleDropdown(event) {
+            event.preventDefault(); // 阻止页面跳转
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // 在页面加载时默认显示英文内容
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleLanguage('en'); // 默认显示英文
+        });
+
+        // 点击页面其他地方时隐藏下拉菜单
+        document.addEventListener('click', function(event) {
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            if (!event.target.closest('.dropdown-menu') && !event.target.closest('.language-toggle')) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="assets/logo.jpg" alt="Logo">
+    </div>
+    <nav>
+    <ul>
+        <li><a href="#vision" data-lang="zh">愿景</a><a href="#vision" data-lang="en" style="display:none;">Vision</a></li>
+        <li><a href="#roadmap" data-lang="zh">路线</a><a href="#roadmap" data-lang="en" style="display:none;">Roadmap</a></li>
+        <li><a href="#products" data-lang="zh">产品</a><a href="#products" data-lang="en" style="display:none;">Products</a></li>
+        <li><a href="#team" data-lang="zh">成员</a><a href="#team" data-lang="en" style="display:none;">Team</a></li>
+        <li><a href="#social" data-lang="zh">社交</a><a href="#social" data-lang="en" style="display:none;">Social</a></li>
+        <li>
+            <a href="#" onclick="toggleDropdown(event)" class="language-toggle">▾ 语言选择</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="toggleLanguage('zh', event)">中文</a></li>
+                <li><a href="#" onclick="toggleLanguage('en', event)">English</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+</header>
+
+<div class="hero" id="vision">
+    <div class="content-block">
+        <h1 data-lang="zh">奇点创新实验室</h1>
+        <h1 data-lang="en" style="display:none;">Singularity Lab</h1>
+        <p data-lang="zh">由来自全球各地的区块链开发者组成，专注于区块链领域的研究，其理念是一切皆可去中心化。虽然我们来自民间团队，并且没有获得任何融资，但我们一直致力于成为区块链行业的builder，希望未来能组织属于我们的去中心化自治社区Singularity DAO。</p>
+        <p data-lang="en" style="display:none;">is composed of blockchain developers from around the world, focused on research in the blockchain field. Their philosophy is that "everything can be decentralized".Although we are a private team and have not received any financing, we have been committed to becoming a builder in the blockchain industry and hope to organize our own decentralized autonomous community, Singularity DAO, in the future.</p>
+    </div>
+</div>
+
+<section id="roadmap">
+    <h2 class="section-title" data-lang="zh">团队路线</h2>
+    <h2 class="section-title" data-lang="en" style="display:none;">Team Roadmap</h2>
+    <div class="content-block">
+        <img id="roadmap-image" src="assets/roadmap_en1.jpg" alt="roadmap" style="max-width: 100%; height: auto;">
+    </div>
+</section>
+
+<section id="products">
+    <h2 class="section-title" data-lang="zh">团队产品</h2>
+    <h2 class="section-title" data-lang="en" style="display:none;">Our Products</h2>
+    <div class="content-block product-grid">
+        <div class="product-card" onclick="window.location.href='https://www.baidu.com';" style="cursor: pointer;">
+            <img src="assets/xsheld.png" alt="icon1">
+            <h3 data-lang="zh">X盾</h3>
+            <h3 data-lang="en" style="display:none;">XShield</h3>
+            <p data-lang="zh">用于拦截推特x.com的诈骗信息、诈骗账号、诈骗链接，采用一种通用的拦截思路，保障你在浏览X的时候免受钓鱼信息、钓鱼链接的困扰。</p>
+            <p data-lang="en" style="display:none;">It is used to block fraudulent information, fraudulent accounts, and fraudulent links on Twitter. It adopts a general interception idea to protect you from phishing information and phishing links when browsing X.</p>
+        </div>
+        <div class="product-card">
+            <img src="assets/staytuned.png" alt="icon2">
+            <h3 data-lang="zh">泡泡棒</h3>
+            <h3 data-lang="en" style="display:none;">Bubble wand</h3>
+            <p data-lang="zh">敬请期待。</p>
+            <p data-lang="en" style="display:none;">Stay tuned.</p>
+        </div>
+        <div class="product-card">
+            <img src="assets/staytuned.png" alt="icon3">
+            <h3 data-lang="zh">敬请期待</h3>
+            <h3 data-lang="en" style="display:none;">Stay tuned</h3>
+            <p data-lang="zh">敬请期待众多令人惊叹的项目。</p>
+            <p data-lang="en" style="display:none;">Many amazing projects to come.</p>
+        </div>
+    </div>
+</section>
+
+<section id="team">
+    <h2 class="section-title" data-lang="zh">团队成员</h2>
+    <h2 class="section-title" data-lang="en" style="display:none;">Our Team</h2>
+    <div class="content-block team-grid">
+        <div class="team-member">
+            <img src="assets/member1.jpg" alt="ByteCat">
+            <h3>ByteCat</h3>
+            <p data-lang="zh">联合创始人、团队负责人</p>
+            <p data-lang="en" style="display:none;">Co-Founder、Team Leader</p>
+            <p data-lang="zh">来自迪拜的web3开发人员，团队大脑，设计和开发了许多令人惊叹的产品。</p>
+            <p data-lang="en" style="display:none;">A web3 developer from Dubai, team brain, who has designed and developed many amazing products.</p>
+        </div>
+        <div class="team-member">
+            <img src="assets/member2.jpg" alt="Adam Warlock">
+            <h3>Adam Warlock</h3>
+            <p data-lang="zh">联合创始人、首席技术官</p>
+            <p data-lang="en" style="display:none;">Co-Founder、CTO</p>
+            <p data-lang="zh">资深技术专家，漫威狂热粉丝，web3研发、红队安全、防御追踪等技术领域的行业领军人物。</p>
+            <p data-lang="en" style="display:none;">A senior technical expert and avid Marvel fan, he is an industry leader in web3 research and development, red team security, defense tracing and other technical fields.</p>
+        </div>
+        <div class="team-member">
+            <img src="assets/member3.jpg" alt="Emma Luv">
+            <h3>Emma Luv</h3>
+            <p data-lang="zh">运营主管</p>
+            <p data-lang="en" style="display:none;">Head Of Operations</p>
+        </div>
+        <div class="team-member">
+            <img src="assets/member4.jpg" alt="Amanda Li">
+            <h3>Amanda Li</h3>
+            <p data-lang="zh">商务主管</p>
+            <p data-lang="en" style="display:none;">Head Of BD</p>
+        </div>
+    </div>
+</section>
+
+<section id="social">
+    <h2 class="section-title" data-lang="zh">社交信息</h2>
+    <h2 class="section-title" data-lang="en" style="display:none;">Social Information</h2>
+    <div class="social-links">
+        <div class="social-icons">
+            <!-- x -->
+            <a href="https://x.com/singularityever" target="_blank">
+                <img src="assets/twitter.png" alt="X" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Twitter/X</span>
+            </a>
+            <!-- warpcast -->
+            <a href="#" target="_blank">
+                <img src="assets/warpcast.png" alt="Warpcast" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Warpcast</span>
+            </a>
+            <!-- teletram -->
+            <a href="#" target="_blank">
+                <img src="assets/telegram.png" alt="Telegram" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Telegram</span>
+            </a>
+            <!-- github -->
+            <a href="https://github.com/0xSingularityLab" target="_blank">
+                <img src="assets/github.png" alt="Github" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Github</span>
+            </a>
+            <!-- medium -->
+            <a href="https://medium.com/@singularitylab" target="_blank">
+                <img src="assets/medium.png" alt="Medium" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Medium</span>
+            </a>
+            <!-- discord -->
+            <a href="#" target="_blank">
+                <img src="assets/discord.png" alt="Discord" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Discord</span>
+            </a>
+            <!-- linktr.ee -->
+            <a href="https://linktr.ee/singularitylab" target="_blank">
+                <img src="assets/linktree.jpg" alt="Discord" style="width: 30px; height: 30px; margin-left: 30px;">
+                <span>Linktr.ee</span>
+            </a>
+            <!-- Email --><br />
+            <a href="mailto:singularitylab@tuta.io" target="_blank">
+                <span data-lang="en"><img src="assets/email.png" alt="Email" style="width: 30px; height: 30px; margin-left: 30px;">Join us/Business: singularitylab@tuta.io</span><span data-lang="zh" style="display:none;"><img src="assets/email.png" alt="Email" style="width: 30px; height: 30px; margin-left: 30px;">加入我们/商务合作: singularitylab@tuta.io</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    © 2024 Singularity Lab. All Rights Reserved.
+</footer>
+
+</body>
+</html>
