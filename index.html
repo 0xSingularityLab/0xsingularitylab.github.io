@@ -203,11 +203,15 @@
         /* 手机端自适应 */
         @media (max-width: 768px) {
             header {
-                padding: 15px 20px;
+                padding: 10px 15px; /* 减少导航栏的内边距 */
             }
             nav ul {
-                flex-direction: column;
-                gap: 10px;
+                flex-direction: row; /* 保持水平排列 */
+                flex-wrap: wrap; /* 如果屏幕太小，允许内容换行 */
+                gap: 8px; /* 减小间距 */
+            }
+            nav ul li a {
+                font-size: 14px; /* 缩小字体以适应屏幕 */
             }
         }
     </style>
