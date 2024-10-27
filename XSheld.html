@@ -29,6 +29,10 @@
             box-sizing: border-box;
             border-bottom: 1px solid #333; /* 底部边框 */
         }
+        .nav-placeholder {
+            height: 80px; /* 与导航栏的高度相同，确保页面内容从导航栏下方开始 */
+        }
+
 
         .logo {
             display: flex;
@@ -58,6 +62,19 @@
         }
         nav ul li a:hover {
             color: #ff5722; /* 悬停时橙色 */
+        }
+
+        .custom-link {
+            color: #FFC107; /* 设置为黄色，与图片颜色相似 */
+            text-decoration: none; /* 移除默认的下划线 */
+            font-weight: bold; /* 加粗文字 */
+            font-size: 30px; /* 增加字体大小，仅针对特定链接 */
+            transition: color 0.3s ease; /* 平滑过渡效果 */
+        }
+
+        .custom-link:hover {
+            color: #FFD54F; /* 悬停时变为较浅的黄色 */
+            text-decoration: underline; /* 悬停时显示下划线 */
         }
 
         .dropdown-menu {
@@ -199,6 +216,101 @@
         .social-links a:hover {
             color: #fff;
         }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 保持两列布局 */
+            gap: 20px; /* 图片之间的间距 */
+            margin-top: 20px;
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden; /* 确保图片不会超出容器 */
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            max-height: 300px; /* 恢复原来的高度限制 */
+            object-fit: cover; /* 确保图片填充容器时保持比例 */
+            border-radius: 8px;
+            transition: transform 0.3s ease; /* 悬停时添加过渡效果 */
+            cursor: pointer; /* 鼠标悬停时显示手型 */
+        }
+
+        .image-grid img:hover {
+            transform: scale(1.05); /* 悬停时轻微放大 */
+        }
+
+        .zoom-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-wrapper:hover .zoom-icon {
+            opacity: 1; /* 悬停时显示放大镜图标 */
+        }
+
+
+        /* 模态框样式 */
+        .modal {
+            display: none; /* 默认不显示 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* 半透明黑色背景 */
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .title-image {
+            width: 100px; /* 保持宽度为100px */
+            height: auto; /* 保持图片的原始比例 */
+            display: block; /* 确保图片单独一行显示 */
+            margin: 0 auto 5px; /* 图片居中并保持与文字的距离 */
+        }
+
+        h1 {
+            margin-top: 5px; /* 确保标题顶部的边距较小 */
+        }
+        .click-to-enlarge {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .click-to-enlarge:hover {
+            color: #000;
+        }
+
+
 
         /* 手机端自适应 */
         @media (max-width: 768px) {
@@ -257,6 +369,20 @@
                 dropdownMenu.style.display = 'none';
             }
         });
+
+        // 打开模态框并显示点击的图片
+        function openModal(imageElement) {
+            var modal = document.getElementById('imageModal');
+            var modalImg = document.getElementById('fullImage');
+            modal.style.display = "block";
+            modalImg.src = imageElement.src; // 将点击的图片的src传给模态框的图片
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            var modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
     </script>
 </head>
 <body>
@@ -269,11 +395,6 @@
     </div>
     <nav>
     <ul>
-        <li><a href="#vision" data-lang="zh">愿景</a><a href="#vision" data-lang="en" style="display:none;">Vision</a></li>
-        <li><a href="#roadmap" data-lang="zh">路线</a><a href="#roadmap" data-lang="en" style="display:none;">Roadmap</a></li>
-        <li><a href="#products" data-lang="zh">产品</a><a href="#products" data-lang="en" style="display:none;">Products</a></li>
-        <li><a href="#team" data-lang="zh">成员</a><a href="#team" data-lang="en" style="display:none;">Team</a></li>
-        <li><a href="#social" data-lang="zh">社交</a><a href="#social" data-lang="en" style="display:none;">Social</a></li>
         <li>
             <a href="#" onclick="toggleDropdown(event)" class="language-toggle">▾ 语言选择</a>
             <ul class="dropdown-menu">
@@ -285,85 +406,54 @@
 </nav>
 </header>
 
+<div class="nav-placeholder"></div>
+
 <div class="hero" id="vision">
     <div class="content-block">
-        <h1 data-lang="zh">奇点创新实验室</h1>
-        <h1 data-lang="en" style="display:none;">Singularity Lab</h1>
-        <p data-lang="zh">由来自全球各地的区块链开发者组成，专注于区块链领域的研究，其理念是一切皆可去中心化。虽然我们来自民间团队，并且没有获得任何融资，但我们一直致力于成为区块链行业的builder，希望未来能组织属于我们的去中心化自治社区Singularity DAO。</p>
-        <p data-lang="en" style="display:none;">is composed of blockchain developers from around the world, focused on research in the blockchain field. Their philosophy is that "everything can be decentralized".Although we are a private team and have not received any financing, we have been committed to becoming a builder in the blockchain industry and hope to organize our own decentralized autonomous community, Singularity DAO, in the future.</p>
+        <img src="assets/xsheld.png" alt="X-Shield Logo" class="title-image">
+        <h1 data-lang="zh">X盾</h1>
+        <h1 data-lang="en" style="display:none;">X-Shield</h1>
+        <p data-lang="zh">是一款可以精准屏蔽推特钓鱼信息、诈骗信息的浏览器插件，这个浏览器插件能完美屏蔽所有试图通过推广和诈骗手法盗取加密货币的信息，不管是推特“广告”、“推荐”，还是web3项目方评论区中的恶意钓鱼链接，本插件都能能精准屏蔽，让你免受钓鱼攻击、诈骗信息、广告信息、恶意信息、滥用信息的困扰，保护你的web3资产安全。</p>
+        <p data-lang="en" style="display:none;">is a browser plugin that can precisely block phishing and scam messages on Twitter. This plugin flawlessly filters out any attempt to steal cryptocurrency through promotions and scams, whether it's Twitter 'ads,' 'recommendations,' or malicious phishing links in web3 project comment sections. X Shield blocks them all with pinpoint accuracy, protecting you from phishing attacks, scams, ads, malicious content, and abusive information, ensuring the security of your web3 assets.</p>
+        <a href="https://github.com/0xSingularityLab/XSheld" data-lang="zh" class="custom-link">点击安装X盾浏览器插件</a>
+        <a href="https://github.com/0xSingularityLab/XSheld" data-lang="en" style="display:none;" class="custom-link">Install the X-Shield browser plug-in</a>
+        <div class="image-grid">
+            <div class="image-wrapper">
+                <img src="assets/xsheld1.jpg" alt="X-Shield 1" onclick="openModal(this)">
+                <span class="zoom-icon">🔍</span>
+                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="assets/xsheld2.jpg" alt="X-Shield 2" onclick="openModal(this)">
+                <span class="zoom-icon">🔍</span>
+                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="assets/xsheld3.jpg" alt="X-Shield 3" onclick="openModal(this)">
+                <span class="zoom-icon">🔍</span>
+                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="assets/xsheld4.jpg" alt="X-Shield 4" onclick="openModal(this)">
+                <span class="zoom-icon">🔍</span>
+                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<section id="roadmap">
-    <h2 class="section-title" data-lang="zh">团队路线</h2>
-    <h2 class="section-title" data-lang="en" style="display:none;">Team Roadmap</h2>
-    <div class="content-block">
-        <img id="roadmap-image" src="assets/roadmap_en1.jpg" alt="roadmap" style="max-width: 100%; height: auto;">
-    </div>
-</section>
 
-<section id="products">
-    <h2 class="section-title" data-lang="zh">团队产品</h2>
-    <h2 class="section-title" data-lang="en" style="display:none;">Our Products</h2>
-    <div class="content-block product-grid">
-        <div class="product-card" onclick="window.location.href='./XSheld.html';" style="cursor: pointer;">
-            <img src="assets/xsheld.png" alt="icon1">
-            <h3 data-lang="zh">X盾</h3>
-            <h3 data-lang="en" style="display:none;">X-Shield</h3>
-            <p data-lang="zh">X盾是一款可以精准屏蔽推特钓鱼信息、诈骗信息的浏览器插件，这个浏览器插件能完美屏蔽所有试图通过推广和诈骗手法盗取加密货币的信息，不管是推特“广告”、“推荐”，还是web3项目方评论区中的恶意钓鱼链接，本插件都能能精准屏蔽，让你免受钓鱼攻击、诈骗信息、广告信息、恶意信息、滥用信息的困扰，保护你的web3资产安全。</p>
-            <p data-lang="en" style="display:none;">X-Shield is a browser plugin that can precisely block phishing and scam messages on Twitter. This plugin flawlessly filters out any attempt to steal cryptocurrency through promotions and scams, whether it's Twitter 'ads,' 'recommendations,' or malicious phishing links in web3 project comment sections. X Shield blocks them all with pinpoint accuracy, protecting you from phishing attacks, scams, ads, malicious content, and abusive information, ensuring the security of your web3 assets.</p>
-        </div>
-        <div class="product-card">
-            <img src="assets/staytuned.png" alt="icon2">
-            <h3 data-lang="zh">泡泡棒</h3>
-            <h3 data-lang="en" style="display:none;">Bubble wand</h3>
-            <p data-lang="zh">敬请期待。</p>
-            <p data-lang="en" style="display:none;">Stay tuned.</p>
-        </div>
-        <div class="product-card">
-            <img src="assets/staytuned.png" alt="icon3">
-            <h3 data-lang="zh">敬请期待</h3>
-            <h3 data-lang="en" style="display:none;">Stay tuned</h3>
-            <p data-lang="zh">敬请期待众多令人惊叹的项目。</p>
-            <p data-lang="en" style="display:none;">Many amazing projects to come.</p>
-        </div>
-    </div>
-</section>
+<!-- 模态框 -->
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="fullImage">
+</div>
 
-<section id="team">
-    <h2 class="section-title" data-lang="zh">团队成员</h2>
-    <h2 class="section-title" data-lang="en" style="display:none;">Our Team</h2>
-    <div class="content-block team-grid">
-        <div class="team-member">
-            <img src="assets/member1.jpg" alt="ByteCat">
-            <h3>ByteCat</h3>
-            <p data-lang="zh">联合创始人、团队负责人</p>
-            <p data-lang="en" style="display:none;">Co-Founder、Team Leader</p>
-            <p data-lang="zh">来自迪拜的web3开发人员，团队大脑，设计和开发了许多令人惊叹的产品。</p>
-            <p data-lang="en" style="display:none;">A web3 developer from Dubai, team brain, who has designed and developed many amazing products.</p>
-        </div>
-        <div class="team-member">
-            <img src="assets/member2.jpg" alt="Adam Warlock">
-            <h3>Adam Warlock</h3>
-            <p data-lang="zh">联合创始人、首席技术官</p>
-            <p data-lang="en" style="display:none;">Co-Founder、CTO</p>
-            <p data-lang="zh">资深技术专家，漫威狂热粉丝，web3研发、红队安全、防御追踪等技术领域的行业领军人物。</p>
-            <p data-lang="en" style="display:none;">A senior technical expert and avid Marvel fan, he is an industry leader in web3 research and development, red team security, defense tracing and other technical fields.</p>
-        </div>
-        <div class="team-member">
-            <img src="assets/member3.jpg" alt="Emma Luv">
-            <h3>Emma Luv</h3>
-            <p data-lang="zh">运营主管</p>
-            <p data-lang="en" style="display:none;">Head Of Operations</p>
-        </div>
-        <div class="team-member">
-            <img src="assets/member4.jpg" alt="Amanda Li">
-            <h3>Amanda Li</h3>
-            <p data-lang="zh">商务主管</p>
-            <p data-lang="en" style="display:none;">Head Of BD</p>
-        </div>
-    </div>
-</section>
+<div class="nav-placeholder"></div>
 
 <section id="social">
     <h2 class="section-title" data-lang="zh">社交信息</h2>
