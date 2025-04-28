@@ -11,35 +11,36 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #121212; /* 深灰色背景 */
-            color: #e0e0e0; /* 浅灰色文字 */
+            font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+            background: #101010;
+            color: #00ff99;
             scroll-behavior: smooth;
         }
 
         header {
-            background-color: #1f1f1f;
-            padding: 20px 60px 20px 40px;
+            background: #181818;
+            padding: 18px 40px 8px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed; /* 确保导航栏固定在顶部 */
-            top: 0;
+            position: fixed;
             width: 100%;
             z-index: 1000;
             box-sizing: border-box;
-            border-bottom: 1px solid #333;
-            height: 80px; /* 导航栏高度 */
+            box-shadow: 0 2px 12px #00ff9922;
         }
 
-        /* 为页面内容整体预留导航栏的空间 */
-        body {
-            padding-top: 100px; /* 为内容添加顶部填充，避免被固定导航栏遮挡 */
+        header::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background: #00ff99;
+            z-index: 20;
         }
-        .nav-placeholder {
-            height: 100px; /* 与导航栏的高度相同，确保页面内容从导航栏下方开始 */
-        }
-
 
         .logo {
             display: flex;
@@ -47,41 +48,59 @@
             margin-right: auto;
         }
         .logo img {
-            width: auto;
-            height: 50px;
+            height: 64px;
             margin-right: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px #00ff9944;
+            position: relative;
+            top: -12px;
+            z-index: 10;
         }
 
         nav ul {
             list-style-type: none;
             display: flex;
-            gap: 20px;
+            gap: 24px;
             margin: 0;
+            padding: 0;
         }
         nav ul li {
             position: relative;
         }
         nav ul li a {
             text-decoration: none;
-            color: #e0e0e0;
-            font-weight: bold;
-            transition: color 0.3s;
+            color: #00ff99;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 4px;
+            padding: 4px 12px;
+            background: #101010;
+            border: 1px solid #00ff99;
+            transition: color 0.2s, background 0.2s;
         }
         nav ul li a:hover {
-            color: #ff5722; /* 悬停时橙色 */
+            color: #101010;
+            background: #00ff99;
         }
 
         .custom-link {
-            color: #FFC107; /* 设置为黄色，与图片颜色相似 */
-            text-decoration: none; /* 移除默认的下划线 */
-            font-weight: bold; /* 加粗文字 */
-            font-size: 30px; /* 增加字体大小，仅针对特定链接 */
-            transition: color 0.3s ease; /* 平滑过渡效果 */
+            color: #00ff99;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border: 1px solid #00ff99;
+            border-radius: 6px;
+            padding: 8px 24px;
+            background: #101010;
+            transition: color 0.3s, background 0.3s;
+            display: inline-block;
+            margin: 18px 0 12px 0;
         }
 
         .custom-link:hover {
-            color: #FFD54F; /* 悬停时变为较浅的黄色 */
-            text-decoration: underline; /* 悬停时显示下划线 */
+            color: #101010;
+            background: #00ff99;
+            text-decoration: underline;
         }
 
         .dropdown-menu {
@@ -92,7 +111,8 @@
             background-color: #333;
             list-style: none;
             padding: 10px;
-            border-radius: 8px; /* 圆角 */
+            border-radius: 8px;
+            z-index: 99;
         }
         .dropdown-menu li {
             padding: 5px 10px;
@@ -106,22 +126,29 @@
 
         .hero {
             height: 100vh;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
+            background: #181818;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: #e0e0e0;
-            background-blend-mode: multiply;
+            border-bottom: 2px solid #00ff99;
         }
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            color: #00ff99;
+            margin-bottom: 12px;
+            text-shadow: 0 0 16px #00ff99cc;
+            letter-spacing: 2px;
         }
         .hero p {
-            font-size: 24px;
+            font-size: 1.2rem;
+            color: #00ff99cc;
+            max-width: 900px;
+            background: #101010;
+            border-left: 4px solid #00ff99;
+            padding: 12px 24px;
+            margin: 0 auto;
+            font-family: 'Fira Mono', 'Consolas', monospace;
         }
 
         section {
@@ -130,9 +157,10 @@
             text-align: center;
         }
         .section-title {
-            font-size: 36px;
+            font-size: 2.2rem;
             margin-bottom: 20px;
-            color: #e0e0e0;
+            color: #00ff99;
+            letter-spacing: 1px;
         }
         .content-block {
             margin: 0 auto;
@@ -204,49 +232,53 @@
         }
 
         footer {
-            background-color: #1f1f1f;
-            padding: 20px;
+            background: #181818;
+            padding: 24px 0 12px 0;
             text-align: center;
-            color: #666;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            border-top: 1px solid #333;
+            color: #00ff99cc;
+            border-top: 2px solid #00ff99;
+            font-size: 1rem;
+            margin-top: 60px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
         }
         .social-links a {
             margin: 0 15px;
-            font-size: 1.5rem;
-            color: #00aced;
+            font-size: 1.1rem;
+            color: #00ff99;
             text-decoration: none;
             transition: color 0.3s;
         }
         .social-links a:hover {
-            color: #fff;
+            color: #101010;
+            background: #00ff99;
+            border-radius: 6px;
+            padding: 2px 8px;
         }
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 保持两列布局 */
-            gap: 20px; /* 图片之间的间距 */
+            grid-template-columns: repeat(4, 1fr); /* 4列横排 */
+            gap: 32px;
             margin-top: 20px;
         }
 
         .image-wrapper {
             position: relative;
-            overflow: hidden; /* 确保图片不会超出容器 */
+            overflow: hidden;
         }
 
         .image-grid img {
             width: 100%;
             height: auto;
-            max-height: 300px; /* 恢复原来的高度限制 */
-            object-fit: cover; /* 确保图片填充容器时保持比例 */
+            max-height: 300px;
+            object-fit: cover;
             border-radius: 8px;
-            transition: transform 0.3s ease; /* 悬停时添加过渡效果 */
-            cursor: pointer; /* 鼠标悬停时显示手型 */
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #00ff9944;
         }
 
         .image-grid img:hover {
-            transform: scale(1.05); /* 悬停时轻微放大 */
+            transform: scale(1.05);
         }
 
         .zoom-icon {
@@ -254,7 +286,7 @@
             bottom: 10px;
             right: 10px;
             font-size: 24px;
-            color: white;
+            color: #00ff99;
             background: rgba(0, 0, 0, 0.5);
             padding: 5px;
             border-radius: 50%;
@@ -263,20 +295,31 @@
         }
 
         .image-wrapper:hover .zoom-icon {
-            opacity: 1; /* 悬停时显示放大镜图标 */
+            opacity: 1;
         }
 
+        .click-to-enlarge {
+            text-align: center;
+            color: #00ff99cc;
+            font-size: 14px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .click-to-enlarge:hover {
+            color: #00ff99;
+        }
 
         /* 模态框样式 */
         .modal {
-            display: none; /* 默认不显示 */
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* 半透明黑色背景 */
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .modal-content {
@@ -290,7 +333,7 @@
             position: absolute;
             top: 10px;
             right: 25px;
-            color: #fff;
+            color: #00ff99;
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
@@ -305,43 +348,49 @@
         h1 {
             margin-top: 5px; /* 确保标题顶部的边距较小 */
         }
-        .click-to-enlarge {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-
-        .click-to-enlarge:hover {
-            color: #000;
-        }
-
-
 
         /* 手机端自适应 */
-        @media (max-width: 768px) {
-            .title-image {
-                width: 80px; /* 调整图片尺寸 */
-                height: auto; /* 确保图片保持原始比例 */
-                margin-top: 20px; /* 增加图片与导航栏的距离 */
-                display: block; /* 确保图片独占一行 */
-                margin-left: auto;
-                margin-right: auto;
-                visibility: visible; /* 确保图片在移动设备上可见 */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 1.5rem; }
+            header { padding: 10px 10px; }
+            nav ul { gap: 10px; }
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr); /* 平板及以下2列 */
             }
-
-            h1 {
-                font-size: 24px; /* 调整标题大小 */
-                margin-top: 10px; /* 确保标题与图片之间有足够的间距 */
-                text-align: center; /* 标题居中对齐 */
-            }
-
-            .content-block {
-                padding-top: 20px; /* 确保内容与导航栏之间有足够的间距 */
+        }
+        @media (max-width: 600px) {
+            header { flex-direction: column; align-items: flex-start; }
+            .logo img { height: 36px; }
+            nav ul { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+            nav ul li a { font-size: 13px; padding: 5px 8px; }
+            .hero { padding-top: 60px; }
+            section { padding: 30px 2px; }
+            .content-block { padding: 0 2px; }
+            .image-grid {
+                grid-template-columns: 1fr; /* 手机1列 */
             }
         }
 
+        .language-toggle {
+            display: inline-block;
+            text-decoration: none;
+            color: #00ff99;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 4px;
+            padding: 4px 12px;
+            background: #101010;
+            border: 1px solid #00ff99;
+            transition: color 0.2s, background 0.2s;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .language-toggle:hover {
+            color: #101010;
+            background: #00ff99;
+        }
     </style>
     <script>
         // 切换语言的功能
@@ -429,34 +478,34 @@
         <img src="assets/xshield.png" alt="X-Shield Logo" class="title-image">
         <h1 data-lang="zh">X盾</h1>
         <h1 data-lang="en" style="display:none;">X-Shield</h1>
-        <p data-lang="zh">是一款可以精准屏蔽推特钓鱼信息、诈骗信息的浏览器插件，这个浏览器插件能完美屏蔽所有试图通过推广和诈骗手法盗取加密货币的信息，不管是推特“广告”、“推荐”，还是web3项目方评论区中的恶意钓鱼链接，本插件都能能精准屏蔽，让你免受钓鱼攻击、诈骗信息、广告信息、恶意信息、滥用信息的困扰，保护你的web3资产安全。</p>
-        <p data-lang="en" style="display:none;">is a browser plugin that can precisely block phishing and scam messages on Twitter. This plugin flawlessly filters out any attempt to steal cryptocurrency through promotions and scams, whether it's Twitter 'ads,' 'recommendations,' or malicious phishing links in web3 project comment sections. X Shield blocks them all with pinpoint accuracy, protecting you from phishing attacks, scams, ads, malicious content, and abusive information, ensuring the security of your web3 assets.</p>
+        <p data-lang="zh">一款可以精准屏蔽推特钓鱼信息、诈骗信息的浏览器插件，这个浏览器插件能完美屏蔽所有试图通过推广和诈骗手法盗取加密货币的信息，不管是推特"广告"、"推荐"，还是web3项目方评论区中的恶意钓鱼链接，本插件都能能精准屏蔽，让你免受钓鱼攻击、诈骗信息、广告信息、恶意信息、滥用信息的困扰，保护你的web3资产安全。</p>
+        <p data-lang="en" style="display:none;">A browser plugin that can precisely block phishing and scam messages on Twitter. This plugin flawlessly filters out any attempt to steal cryptocurrency through promotions and scams, whether it's Twitter 'ads,' 'recommendations,' or malicious phishing links in web3 project comment sections. X Shield blocks them all with pinpoint accuracy, protecting you from phishing attacks, scams, ads, malicious content, and abusive information, ensuring the security of your web3 assets.</p>
         <a href="https://chromewebstore.google.com/detail/x-sheld/eobohieajklknfehicjgogonohkoecjb" data-lang="zh" class="custom-link">点击安装X盾浏览器插件</a>
         <a href="https://chromewebstore.google.com/detail/x-sheld/eobohieajklknfehicjgogonohkoecjb" data-lang="en" style="display:none;" class="custom-link">Install the X-Shield browser plug-in</a>
         <div class="image-grid">
             <div class="image-wrapper">
                 <img src="assets/xsheld1.jpg" alt="X-Shield 1" onclick="openModal(this)">
                 <span class="zoom-icon">🔍</span>
-                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
-                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+                <p class="click-to-enlarge" data-lang="zh" onclick="openModal(this.parentNode.querySelector('img'))">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;" onclick="openModal(this.parentNode.querySelector('img'))">View Image</p>
             </div>
             <div class="image-wrapper">
                 <img src="assets/xsheld2.jpg" alt="X-Shield 2" onclick="openModal(this)">
                 <span class="zoom-icon">🔍</span>
-                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
-                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+                <p class="click-to-enlarge" data-lang="zh" onclick="openModal(this.parentNode.querySelector('img'))">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;" onclick="openModal(this.parentNode.querySelector('img'))">View Image</p>
             </div>
             <div class="image-wrapper">
                 <img src="assets/xsheld3.jpg" alt="X-Shield 3" onclick="openModal(this)">
                 <span class="zoom-icon">🔍</span>
-                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
-                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+                <p class="click-to-enlarge" data-lang="zh" onclick="openModal(this.parentNode.querySelector('img'))">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;" onclick="openModal(this.parentNode.querySelector('img'))">View Image</p>
             </div>
             <div class="image-wrapper">
                 <img src="assets/xsheld4.jpg" alt="X-Shield 4" onclick="openModal(this)">
                 <span class="zoom-icon">🔍</span>
-                <p class="click-to-enlarge" data-lang="zh">查看大图</p>
-                <p class="click-to-enlarge" data-lang="en" style="display:none;">View Image</p>
+                <p class="click-to-enlarge" data-lang="zh" onclick="openModal(this.parentNode.querySelector('img'))">查看大图</p>
+                <p class="click-to-enlarge" data-lang="en" style="display:none;" onclick="openModal(this.parentNode.querySelector('img'))">View Image</p>
             </div>
         </div>
     </div>
@@ -472,8 +521,8 @@
 <div class="nav-placeholder"></div>
 
 <section id="social">
-    <h2 class="section-title" data-lang="zh">社交信息</h2>
-    <h2 class="section-title" data-lang="en" style="display:none;">Social Information</h2>
+    <h2 class="section-title" data-lang="zh">社交媒体</h2>
+    <h2 class="section-title" data-lang="en" style="display:none;">Social Media</h2>
     <div class="social-links">
         <div class="social-icons">
             <!-- x -->
@@ -492,7 +541,7 @@
                 <span>Telegram</span>
             </a>
             <!-- github -->
-            <a href="https://github.com/0xSingularityLab/XShield" target="_blank">
+            <a href="https://github.com/0xSingularityLab/X-Shield" target="_blank">
                 <img src="assets/github.png" alt="Github" style="width: 30px; height: 30px; margin-left: 30px;">
                 <span>Github</span>
             </a>
@@ -511,16 +560,12 @@
                 <img src="assets/linktree.jpg" alt="Discord" style="width: 30px; height: 30px; margin-left: 30px;">
                 <span>Linktr.ee</span>
             </a>
-            <!-- Email --><br />
-            <a href="mailto:singularitylab@tuta.io" target="_blank">
-                <span data-lang="en"><img src="assets/email.png" alt="Email" style="width: 30px; height: 30px; margin-left: 30px;">Join us/Business: singularitylab@tuta.io</span><span data-lang="zh" style="display:none;"><img src="assets/email.png" alt="Email" style="width: 30px; height: 30px; margin-left: 30px;">加入我们/商务合作: singularitylab@tuta.io</span>
-            </a>
         </div>
     </div>
 </section>
 
 <footer class="footer">
-    © 2024 Singularity Lab. All Rights Reserved.
+    © 2025 Singularity Lab. All Rights Reserved.
 </footer>
 
 </body>
